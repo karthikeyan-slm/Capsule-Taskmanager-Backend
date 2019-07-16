@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.nio.charset.Charset;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -59,12 +58,11 @@ public class TaskControllerTest {
 	}
 
 	@Test
-	public void testListAllTask() throws Exception, ParseException {
-		SimpleDateFormat dformat = new SimpleDateFormat("MM-dd-yyyy");
-		LocalDate edate1 = LocalDate.of(2017,Month.FEBRUARY,3);
-		LocalDate sdate1 = LocalDate.of(2017,Month.FEBRUARY,3);
-		LocalDate edate2 = LocalDate.of(2017,Month.FEBRUARY,3);
-		LocalDate sdate2 = LocalDate.of(2017,Month.FEBRUARY,3);
+	public void testPopulateAllTasks() throws Exception, ParseException {
+		LocalDate edate1 = LocalDate.of(2019,Month.FEBRUARY,3);
+		LocalDate sdate1 = LocalDate.of(2019,Month.FEBRUARY,1);
+		LocalDate edate2 = LocalDate.of(2019,Month.MARCH,16);
+		LocalDate sdate2 = LocalDate.of(2019,Month.MARCH,10);
 		Task task2 = new Task();
 		Task task1 = new Task();
 		task1.setTaskId(1);
@@ -103,7 +101,6 @@ public class TaskControllerTest {
 
 	@Test
 	public void testPostTask() throws Exception {
-		SimpleDateFormat dformat = new SimpleDateFormat("MM-dd-yyyy");
 		LocalDate sdate = LocalDate.of(2017,Month.FEBRUARY,3);
 		LocalDate edate = LocalDate.of(2017,Month.FEBRUARY,3);
 		Task object = new Task();
@@ -114,7 +111,6 @@ public class TaskControllerTest {
 		object.setStartDate(edate);
 		object.setEndDate(sdate);
 		
-	//	when(tservice.addTask(object)).thenReturn(object);
 		mockMvc.perform(
 				post("/addTask").contentType(APPLICATION_JSON_UTF8).content(TaskUtil.ObjecttoJSON(object)))
 				.andExpect(status().isCreated()).andExpect(jsonPath("$.taskId", is(4)))
@@ -134,7 +130,6 @@ public class TaskControllerTest {
 		object.setStartDate(null);
 		object.setEndDate(null);
 		
-	//	when(tservice.viewAllTask(object)).thenThrow(new NoValuesFoundException());
 		mockMvc.perform(post("/api/task/create").contentType(APPLICATION_JSON_UTF8).content(asJsonString(object)))
 				.andExpect(status().isBadRequest()).andDo(print());
 
@@ -148,31 +143,7 @@ public class TaskControllerTest {
 		}
 	}
 
-	@Test
-	public void testUpdateTask() throws Exception {
-		SimpleDateFormat dformat = new SimpleDateFormat("MM-dd-yyyy");
-		LocalDate sdate1 = LocalDate.of(2017,Month.FEBRUARY,3);
-		LocalDate edate1 = LocalDate.of(2017,Month.FEBRUARY,3);
-
-		Task task1 = new Task();
-		Task task2 = new Task();
-		task1.setTaskId(1);
-		task1.setTask("Task1");
-		
-		task1.setPriority(12);
-		task1.setParentTask("parentask1");
-		task1.setStartDate(edate1);
-		task1.setEndDate(sdate1);
 	
-		task2.setTaskId(1);
-		task2.setTask("Task1");
-		task2.setPriority(13);
-		task2.setParentTask("parentask1");
-		task2.setStartDate(edate1);
-		task2.setEndDate(sdate1);
-	
-		
-	}
 
 	
 

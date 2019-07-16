@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -16,8 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Task {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "taskId")
+	@Column(name = "task_id", unique = true, nullable = false)
 	private long taskId;
 	
 	@Column(name = "task")
@@ -26,15 +26,15 @@ public class Task {
 	@Column(name = "priority")
 	private int priority;
 	
-	@Column(name = "parentTask")
+	@Column(name = "parent_task")
 	private String parentTask;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
-	@Column(name = "startDate")
+	@Column(name = "start_date")
 	private LocalDate startDate;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
-	@Column(name = "endDate")
+	@Column(name = "end_date")
 	private LocalDate endDate;
 	
 	public long getTaskId() {

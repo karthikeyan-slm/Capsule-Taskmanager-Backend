@@ -22,13 +22,13 @@ import com.taskmanager.exception.RecordNotFoundException;
 import com.taskmanager.service.TaskServiceImpl;
 
 @RestController
-
+@RequestMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 public class TaskController {
 
 @Autowired
 private TaskServiceImpl taskImpl;
 
-@PostMapping
+@PostMapping("/task/addTask")
 public ResponseEntity<String> create(@RequestBody Task task) {
 	ResponseEntity<String> resp = null;
 	if (task == null) {
@@ -55,7 +55,7 @@ public ResponseEntity<?> getEmp(@PathVariable("id") Long task_id) throws RecordN
 	}
 	return resp;
 }
-@GetMapping
+@GetMapping("/viewtask")
 public ResponseEntity<List<Task>> findAllTask() {
 	return new ResponseEntity<>(taskImpl.findAllTask(), HttpStatus.OK);
 }

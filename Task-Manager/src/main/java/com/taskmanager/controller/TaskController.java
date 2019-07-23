@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.taskmanager.exception.RecordNotFoundException;
 import com.taskmanager.service.TaskServiceImpl;
 
 @RestController
+@CrossOrigin(origins ="*")
 @RequestMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 public class TaskController {
 
@@ -35,7 +37,7 @@ public ResponseEntity<String> create(@RequestBody Task task) {
 		resp = new ResponseEntity<>("No Task found", HttpStatus.NO_CONTENT);
 	} else {
 		taskImpl.addTask(task);
-		resp = new ResponseEntity<>("Task details added successfully!!!" + task, HttpStatus.CREATED);
+		resp = new ResponseEntity<>("Task details added successfully!!!" + task, HttpStatus.OK);
 		System.out.println("Task details added succesfully!!!");
 	}
 	return resp;
